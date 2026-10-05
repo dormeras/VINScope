@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Проверка истории автомобиля по VIN-коду" />
+  <title>VINscope - проверка автомобиля</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="topline"></div>
+  <header class="wrap">
+    <div class="logo"><span class="logo-mark">V</span>VINscope</div>
+    <nav><a href="#what">Что проверяем</a><a href="#about">О сервисе</a><a class="login" href="#check">Войти</a></nav>
+  </header>
+  <main>
+    <section class="wrap hero" id="check">
+      <div>
+        <div class="eyebrow"><span class="dot"></span>данные обновляются ежедневно</div>
+        <h1>Узнайте историю <em>до покупки</em> автомобиля</h1>
+        <p class="sub">Один VIN-код — и вся важная информация в понятном отчёте. Без догадок, рисков и неприятных сюрпризов после сделки.</p>
+        <div class="search-box">
+          <form id="vin-form" novalidate>
+            <input id="vin" maxlength="17" autocomplete="off" placeholder="Введите VIN, например XTA219010G0123456" aria-label="VIN-код автомобиля" />
+            <button type="submit">Проверить VIN →</button>
+          </form>
+        </div>
+        <p class="hint">VIN состоит из 17 символов. Не используем буквы I, O и Q.</p>
+        <div class="result" id="result" role="status"></div>
+      </div>
+      <aside class="card" aria-label="Пример отчёта">
+        <div class="card-top"><span class="tiny">Пример отчёта</span><span class="status">● Готов</span></div>
+        <div class="car"><span class="tiny">Автомобиль</span><h3 class="car-name">Toyota Camry</h3><span class="plate">2020 · 2.5 AT · 181 л.с.</span><div class="meter"><span></span></div><div class="risk"><span>Индекс прозрачности</span><b>84 / 100</b></div></div>
+        <div class="checks"><span>Ограничения<strong>Не найдены</strong></span><span>ДТП<strong>1 запись</strong></span><span>Пробег<strong>Подтверждён</strong></span></div>
+      </aside>
+    </section>
+    <section class="wrap report" id="report" aria-live="polite" hidden>
+      <div class="report-head">
+        <div><span class="eyebrow"><span class="dot"></span>отчёт</span><h2 id="report-title"></h2><p id="report-subtitle"></p></div>
+        <div class="score"><span>Индекс прозрачности</span><strong id="report-score"></strong><small id="report-risk"></small></div>
+      </div>
+      <p class="report-meta" id="report-meta"></p>
+      <div class="report-groups" id="report-groups"></div>
+      <div class="scrape-panel" id="scrape-panel">
+        <div>
+          <span class="eyebrow"><span class="dot"></span>scraping</span>
+          <h3>Проверить локальные источники</h3>
+          <p>Скрапер последовательно читает три HTML-страницы, находит строки по VIN, нормализует результаты и выделяет признаки коммерческого использования.</p>
+        </div>
+        <button id="scrape-button" type="button">Запустить скрапинг →</button>
+      </div>
+      <div class="scrape-result" id="scrape-result" hidden></div>
+    </section>
+    <section class="wrap section process" id="process">
+      <div class="section-head"><h2>Бизнес-процесс<br>абстрактного сервиса</h2><p>Схема показывает, что происходит после ввода VIN: от приёма запроса до формирования результата для потенциального покупателя.</p></div>
+      <div class="process-grid">
+        <article><span>01</span><h3>Запрос</h3><p>Пользователь вводит VIN и запускает проверку.</p></article>
+        <article><span>02</span><h3>Валидация</h3><p>Система проверяет формат VIN и создаёт задачу проверки.</p></article>
+        <article><span>03</span><h3>Скрапинг</h3><p>Учебный сборщик читает HTML-источники и извлекает записи.</p></article>
+        <article><span>04</span><h3>Нормализация</h3><p>Разные формулировки приводятся к единой структуре признаков.</p></article>
+        <article><span>05</span><h3>Анализ</h3><p>Система объединяет сигналы и показывает наличие признаков такси.</p></article>
+        <article><span>06</span><h3>Отчёт</h3><p>Пользователь получает структурированный учебный результат и источники.</p></article>
+      </div>
+    </section>
+    <div class="wrap brands"><a href="#process">Бизнес-процесс</a><span>ГИБДД</span><span>ФНП</span><span>ФТС</span><span>РСА</span><span>официальные реестры</span></div>
+    <section class="wrap section" id="what">
+      <div class="section-head"><h2>Всё, что важно<br>знать о машине</h2><p>Собираем данные из открытых и официальных источников, чтобы решение о покупке было уверенным.</p></div>
+      <div class="features">
+        <article class="feature"><span class="num">01 / ИСТОРИЯ</span><h3>ДТП и ремонты</h3><p>Зарегистрированные аварии, характер повреждений и расчёты стоимости ремонта.</p></article>
+        <article class="feature"><span class="num">02 / СТАТУС</span><h3>Залог и ограничения</h3><p>Проверка юридических ограничений, розыска и записи в реестре залогов.</p></article>
+        <article class="feature"><span class="num">03 / ПРОБЕГ</span><h3>Показания одометра</h3><p>Сверяем значения пробега из техосмотров, сервисов и объявлений.</p></article>
+        <article class="feature"><span class="num">04 / ВЛАДЕЛЬЦЫ</span><h3>История регистраций</h3><p>Количество владельцев и периоды владения без раскрытия персональных данных.</p></article>
+        <article class="feature"><span class="num">05 / ТАКСИ</span><h3>Коммерческое использование</h3><p>Узнайте, использовался ли автомобиль в такси, каршеринге или лизинге.</p></article>
+        <article class="feature"><span class="num">06 / ХАРАКТЕРИСТИКИ</span><h3>Комплектация и данные</h3><p>Марка, модель, год выпуска, двигатель и другие заводские характеристики.</p></article>
+      </div>
+    </section>
+    <section class="wrap cta" id="about"><h2>Проверка занимает меньше минуты. Ошибка при покупке может стоить гораздо дороже.</h2><button onclick="document.getElementById('vin').focus()">Проверить автомобиль</button></section>
+  </main>
+  <footer class="wrap"><span>VINscope</span><span>Ivan Sypalov, GI-41</span></footer>
+  <script>
+    const form = document.getElementById('vin-form');
+    const vin = document.getElementById('vin');
+    const result = document.getElementById('result');
+    const report = document.getElementById('report');
+    const submit = form.querySelector('button');
+    const scrapeButton = document.getElementById('scrape-button');
+    const scrapeResult = document.getElementById('scrape-result');
+    let currentVin = '';
+    vin.addEventListener('input', () => { vin.value = vin.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); result.style.display = 'none'; });
+    const safe = text => String(text ?? '').replace(/[&<>'"]/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', "'":'&#39;', '"':'&quot;' }[char]));
+    function renderReport(data) {
+      currentVin = data.vehicle.vin;
+      document.getElementById('report-title').textContent = data.vehicle.title;
+      document.getElementById('report-subtitle').textContent = `${data.vehicle.subtitle} · ${data.vehicle.color}`;
+      document.getElementById('report-score').textContent = `${data.vehicle.riskScore} / 100`;
+      document.getElementById('report-risk').textContent = data.vehicle.riskLabel;
+      document.getElementById('report-meta').textContent = `VIN: ${data.vehicle.vin} · Дата обновления базы: ${data.vehicle.updatedAt}`;
+      document.getElementById('report-groups').innerHTML = data.groups.map(group => `
+        <section class="report-group"><h3>${safe(group.title)}</h3><div class="report-items">
+          ${group.items.map(item => `<article class="report-item ${safe(item.state)}"><span class="item-state"></span><div><h4>${safe(item.label)}</h4><b>${safe(item.value)}</b>${item.details ? `<p>${safe(item.details)}</p>` : ''}</div></article>`).join('')}
+        </div></section>`).join('');
+      report.hidden = false;
+      report.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    scrapeButton.addEventListener('click', async () => {
+      if (!currentVin) return;
+      scrapeButton.disabled = true;
+      scrapeButton.textContent = 'Скрапим источники…';
+      scrapeResult.hidden = false;
+      scrapeResult.innerHTML = '<div class="scrape-loading">Шаги: получение HTML → поиск VIN → нормализация → выделение сигналов…</div>';
+      try {
+        const response = await fetch(`scrape-api.php?vin=${encodeURIComponent(currentVin)}`);
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) throw new Error(payload.message || 'Скрапинг не выполнен.');
+        const data = payload.data;
+        scrapeResult.innerHTML = `
+          <div class="scrape-summary"><div><span>Источников</span><b>${data.sourcesChecked}</b></div><div><span>Найдено записей</span><b>${data.recordsFound}</b></div><div><span>Признак такси</span><b>${safe(data.taxiLabel)}</b></div></div>
+          <div class="scrape-sources">${data.sources.map(item => `<article><small>${safe(item.source)}</small><strong>${safe(item.value)}</strong></article>`).join('')}</div>
+          <div class="scrape-note"><b>Сигналы:</b> ${data.signals.length ? data.signals.map(safe).join(' · ') : 'явных сигналов коммерческого использования не найдено'}</div>`;
+      } catch (error) {
+        scrapeResult.innerHTML = `<div class="result error" style="display:block">${safe(error.message)}</div>`;
+      } finally {
+        scrapeButton.disabled = false;
+        scrapeButton.textContent = 'Запустить скрапинг →';
+      }
+    });
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const value = vin.value.trim();
+      const valid = /^[A-HJ-NPR-Z0-9]{17}$/.test(value);
+      if (!valid) {
+        result.className = 'result error';
+        result.textContent = 'Введите корректный VIN: 17 символов, латинские буквы и цифры (I, O и Q не используются).';
+        result.style.display = 'block';
+        return;
+      }
+      submit.disabled = true;
+      submit.textContent = 'Ищем в базе…';
+      result.className = 'result';
+      result.textContent = 'Выполняем поиск по базе данных…';
+      result.style.display = 'block';
+      try {
+        const response = await fetch(`api.php?vin=${encodeURIComponent(value)}`);
+        const data = await response.json();
+        if (!response.ok || !data.ok) throw new Error(data.message || 'Не удалось получить отчёт.');
+        result.style.display = 'none';
+        renderReport(data);
+      } catch (error) {
+        result.className = 'result error';
+        result.textContent = error.message || 'Ошибка соединения с сервером.';
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Проверить VIN →';
+      }
+    });
+  </script>
+</body>
+</html>
